@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Animais";
+}
+
+<div class="flex flex-col py-8 px-4 sm:px-2">
+    <div class="w-full max-w-screen-md mx-auto mb-8">
+        <div class="flex mb-2 h-10">
+            <span class="text-xl font-bold">Animais</span>
+            <v-spacer></v-spacer>
+            <v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
+        </div>
+        <div class="flex flex-col">
+            <v-data-table 
+                :headers="entitiesHeaders" :items="entities" 
+                :items-per-page="25" class="elevation-1" 
+                :loading="!entitiesLoaded" loading-text="Carregando..." 
+                hide-default-footer disable-sort>
+                <template v-slot:item.birthdate="{ item }">
+                    {{ new Date(item.birthdate).toLocaleDateString() }}
+                </template>
+            </v-data-table>
+        </div>
+    </div>
+</div>
+
+@section Script
+{
+    <script src="~/Animals/Animals.js" asp-append-version="true"></script>
+}
+
+@section Style {
+    <link rel="stylesheet" href="~/Animals/Animals.css" asp-append-version="true" />
+}

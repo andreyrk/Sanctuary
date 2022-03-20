@@ -28,8 +28,9 @@ namespace Sanctuary.Presentation
             services.AddAuthentication("Cookies")
                 .AddCookie("Cookies", options =>
                 {
+                    options.LoginPath = "/Authentication";
+                    options.LogoutPath = "/Authentication/Logout";
                     options.AccessDeniedPath = "/Authentication/Denied";
-                    options.LoginPath = "/Authentication/Login";
                 }
             );
         }

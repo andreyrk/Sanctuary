@@ -8,13 +8,13 @@
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
-    <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"] - Santuário</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
     <link rel="stylesheet" href="~/Shared/Shared.css" />
-    <link rel="icon" type="image/png" href="~/favicon.png">
+    <link rel="icon" type="image/png" href="~/Shared/LogoIcon.png">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@2/dist/vuetify.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2/dist/tailwind.min.css" />
@@ -26,6 +26,13 @@
 <body>
     <div id="app" class="hidden">
         <v-app transition="fade-transition">
+            <div class="w-full bg-primary">
+                <div class="flex w-full px-2 py-2">
+                    <div class="w-28 mx-auto">
+                        <a href="/"><v-img src="/Shared/LogoHeader.png" contain style="cursor: pointer"></v-img></a>
+                    </div>
+                </div>
+            </div>
             @RenderBody()
             <v-dialog v-model="org.alert.active" max-width="480">
                 <v-card>

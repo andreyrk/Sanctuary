@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Não permitido";
+}
+
+<div class="flex flex-col p-8">
+    <div class="mt-auto">
+        <div class="text-center text-lg font-semibold">
+            Você não possui permissão para acessar essa página
+        </div>
+    </div>
+    <div class="mt-4 mb-auto mx-auto">
+        <v-btn elevation="0" rounded color="primary" href="/">Página inicial</v-btn>
+    </div>
+</div>
+
+@section Script
+{
+    <script src="~/Authentication/Denied.js" asp-append-version="true"></script>
+}
+
+@section Style {
+
+}

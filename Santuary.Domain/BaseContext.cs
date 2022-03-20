@@ -12,6 +12,7 @@ namespace Sanctuary.Domain
         public BaseContext(DbContextOptions<BaseContext> options) : base(options) { }
 
         public virtual DbSet<Animal> Animals { get; set; }
+        public virtual DbSet<Animal> Species { get; set; }
         public virtual DbSet<Volunteer> Volunteers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

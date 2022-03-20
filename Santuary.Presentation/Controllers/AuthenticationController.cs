@@ -18,6 +18,14 @@ namespace Sanctuary.Presentation.Controllers
     {
         public AuthenticationController(BaseContext context) : base(context) { }
 
+        [HttpGet("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+
+            return RedirectPermanent("/");
+        }
+
         [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
@@ -76,24 +84,16 @@ namespace Sanctuary.Presentation.Controllers
             });
         }
 
-        [HttpGet]
-        public IActionResult Index()
+        [HttpGet("Denied")]
+        public IActionResult Denied()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("Admin")]
-        public IActionResult Admin()
+        [HttpGet]
+        public IActionResult Index()
         {
-            return RedirectPermanent("/Allowed");
-        }
-
-        [Authorize(Roles = "Default,Admin")]
-        [HttpGet("Default")]
-        public IActionResult Default()
-        {
-            return RedirectPermanent("/Allowed");
+            return View();
         }
     }
 }

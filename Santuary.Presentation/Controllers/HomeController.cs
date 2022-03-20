@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sanctuary.Domain;
 
 namespace Sanctuary.Presentation.Controllers
@@ -7,6 +8,7 @@ namespace Sanctuary.Presentation.Controllers
     {
         public HomeController(BaseContext context) : base(context) { }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();

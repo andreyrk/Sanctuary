@@ -12,7 +12,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Animals\Animals.js" />
+    <Content Remove="wwwroot\Authentication\Denied.js" />
+    <Content Remove="wwwroot\Home\Authenticated.js" />
+    <Content Remove="wwwroot\Species\Species.js" />
+    <Content Remove="wwwroot\Template\Template.js" />
+    <Content Remove="wwwroot\Volunteers\Volunteers.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Species\Species.js" />
+    <None Include="wwwroot\Volunteers\Volunteers.js" />
+    <None Include="wwwroot\Template\Template.js" />
+    <None Include="wwwroot\Animals\Animals.js" />
+    <None Include="wwwroot\Authentication\Denied.js" />
     <None Include="wwwroot\Authentication\Authentication.js" />
+    <None Include="wwwroot\Home\Authenticated.js" />
     <None Include="wwwroot\Shared\Shared.css" />
     <None Include="wwwroot\Shared\Shared.js" />
   </ItemGroup>
