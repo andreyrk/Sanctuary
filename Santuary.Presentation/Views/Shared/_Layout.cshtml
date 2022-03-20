@@ -1,0 +1,82 @@
+﻿@using System.Diagnostics
+
+@{
+    var isAuthenticated = User.Identity.IsAuthenticated;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="~/Shared/Shared.css" />
+    <link rel="icon" type="image/png" href="~/favicon.png">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vuetify@2/dist/vuetify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2/dist/tailwind.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.x/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" />
+
+    @await RenderSectionAsync("Style", required: false)
+</head>
+<body>
+    <div id="app" class="hidden">
+        <v-app transition="fade-transition">
+            @RenderBody()
+            <v-dialog v-model="org.alert.active" max-width="480">
+                <v-card>
+                    <v-card-title class="text-h6">{{ org.alert.title }}</v-card-title>
+                    <v-card-text>{{ org.alert.message }}</v-card-text>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text @@click="org.alert.active = false">OK</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </v-app>
+    </div>
+    <div id="loading-spinner" class="flex w-full h-full justify-center content-center">
+        <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-mask-plugin@latest/dist/jquery.mask.min.js"></script>
+    <environment include="Development">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2/dist/vuetify.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2"></script>
+    </environment>
+
+    <script>
+        var org = {
+            isAuthenticated: @isAuthenticated.ToString().ToLower(),
+            alert: {
+                title: "",
+                message: "",
+                active: false
+            },
+            showAlert(title, message) {
+                this.alert.title = title
+                this.alert.message = message
+                this.alert.active = true
+            },
+            mounted(vue) {
+                vue.$nextTick(() => {
+                    $("#app").removeClass("hidden")
+                    $("#loading-spinner").addClass("hidden")
+                })
+            }
+        }
+    </script>
+    <script src="~/Shared/Shared.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Script", required: false)
+</body>
+</html>

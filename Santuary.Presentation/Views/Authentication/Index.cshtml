@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Autenticação - Santuário";
+}
+
+<div class="w-full bg-primary mb-8">
+    @*<div class="flex w-full px-4">
+        <div class="w-24 mx-auto">
+            <a href="/"><v-img src="/Shared/Logo.png" contain style="cursor: pointer"></v-img></a>
+        </div>
+    </div>*@
+</div>
+
+<v-form ref="loginForm" class="px-2">
+    <v-card class="max-w-screen-sm rounded-lg mx-auto mb-8">
+        <v-card-title class="p-3">Entrar</v-card-title>
+        <v-card-subtitle class="p-3">Já possui cadastro? Preencha seu email e senha</v-card-subtitle>
+        <v-divider></v-divider>
+        <v-row class="p-3" dense>
+            <v-col cols="12">
+                <div class="mb-1">Email</div>
+                <v-text-field v-model="loginModel.Email" dense rounded solo hide-details="auto" :rules="genericRules" required></v-text-field>
+            </v-col>
+            <v-col cols="12">
+                <div class="mb-1">Senha</div>
+                <v-text-field v-model="loginModel.Password" dense rounded solo hide-details="auto" type="password" :rules="genericRules" required @@keypress.enter="onLogin"></v-text-field>
+            </v-col>
+            <v-col cols="12">
+                <v-btn plain small text class="float-right" @@click.stop="forgotPasswordDialog = true">Esqueci minha senha</v-btn>
+            </v-col>
+        </v-row>
+        <v-divider></v-divider>
+        <v-card-actions class="p-2">
+            <v-btn rounded color="primary" elevation="0" class="w-full sm:w-48 mx-auto" :disabled="isLoggingIn || isRegistering" :loading="isLoggingIn" @@click="onLogin">Entrar</v-btn>
+        </v-card-actions>
+    </v-card>
+</v-form>
+
+<v-form ref="registerForm" class="px-2">
+    <v-card class="max-w-screen-sm rounded-lg mx-auto mb-8 mx-4">
+        <v-card-title class="p-3">Registrar</v-card-title>
+        <v-card-subtitle class="p-3">Não possui cadastro? Preencha seus dados</v-card-subtitle>
+        <v-divider></v-divider>
+        <v-row class="p-3" dense>
+            <v-col cols="12">
+                <div class="mb-1">Nome</div>
+                <v-text-field v-model="registerModel.Name" dense rounded solo hide-details="auto" :rules="genericRules" required></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+                <div class="mb-1">Data de nascimento</div>
+                <v-text-field v-model="registerModel.Birthdate" inputmode="numeric" dense rounded solo hide-details="auto" :rules="dateRules" @@keyup.native="formatDate" required></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+                <div class="mb-1">Telefone</div>
+                <v-text-field v-model="registerModel.Phone" inputmode="numeric" dense rounded solo hide-details="auto" :rules="genericRules" required></v-text-field>
+            </v-col>
+            <v-col cols="12">
+                <div class="mb-1">E-mail</div>
+                <v-text-field v-model="registerModel.Email" dense rounded solo hide-details="auto" :rules="genericRules" type="email" required></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+                <div class="mb-1">Senha</div>
+                <v-text-field v-model="registerModel.Password" dense rounded solo hide-details="auto" :rules="genericRules" type="password" required></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+                <div class="mb-1">Confirmar Senha</div>
+                <v-text-field v-model="registerModel.ConfirmPassword" dense rounded solo hide-details="auto" :rules="genericRules" type="password" required></v-text-field>
+            </v-col>
+        </v-row>
+        <v-divider></v-divider>
+        <v-card-actions class="p-2">
+            <v-btn rounded color="primary" elevation="0" class="w-full sm:w-48 mx-auto" :disabled="isRegistering || isLoggingIn" :loading="isRegistering" @@click="onRegister">Registrar</v-btn>
+        </v-card-actions>
+    </v-card>
+</v-form>
+
+<v-dialog v-model="forgotPasswordDialog" content-class="elevation-0 p-0 m-0 overflow-hidden" persistent>
+    <v-form ref="forgotPasswordForm">
+        <v-card class="max-w-screen-sm w-full mx-auto">
+            <v-card-title class="p-3">Esqueci minha senha</v-card-title>
+            <v-card-subtitle class="p-3">Tudo bem! Enviaremos um e-mail para você redefinir</v-card-subtitle>
+            <v-divider></v-divider>
+            <v-row class="p-3" dense>
+                <v-col cols="12">
+                    <div class="mb-1">E-mail</div>
+                    <v-text-field v-model="forgotPasswordModel.Email" dense rounded solo hide-details="auto" :rules="genericRules" required></v-text-field>
+                </v-col>
+            </v-row>
+            <v-divider></v-divider>
+            <v-card-actions>
+                <v-btn rounded color="primary" outlined elevation="0" class="w-48 ml-auto" @@click="forgotPasswordDialog = false">
+                    Cancelar
+                </v-btn>
+                <v-btn rounded color="primary" elevation="0" class="w-48" @@click="onForgotPassword" :disabled="isRecovering" :loading="isRecovering">
+                    Enviar
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-form>
+</v-dialog>
+
+@section Script
+{
+    <script src="~/Authentication/Authentication.js" asp-append-version="true"></script>
+}
+
+@section Style {
+    <link rel="stylesheet" href="~/Authentication/Authentication.css" asp-append-version="true" />
+}
