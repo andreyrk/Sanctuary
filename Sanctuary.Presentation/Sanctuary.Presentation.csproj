@@ -42,8 +42,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Santuary.Application\Sanctuary.Application.csproj" />
-    <ProjectReference Include="..\Santuary.Domain\Sanctuary.Domain.csproj" />
+    <ProjectReference Include="..\Sanctuary.Application\Sanctuary.Application.csproj" />
+    <ProjectReference Include="..\Sanctuary.Domain\Sanctuary.Domain.csproj" />
   </ItemGroup>
 
 </Project>
