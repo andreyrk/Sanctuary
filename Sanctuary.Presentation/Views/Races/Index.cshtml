@@ -7,7 +7,7 @@
         <div class="flex mb-2 h-10">
             <span class="leading-loose text-xl font-bold">Raças</span>
             <v-spacer></v-spacer>
-            <v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
+            <v-btn icon @@click="isAdding = true"><v-icon>mdi-plus</v-icon></v-btn>
         </div>
         <div class="flex flex-col">
             <v-data-table 
@@ -15,10 +15,44 @@
                 :items-per-page="25" class="elevation-1" 
                 :loading="!entitiesLoaded" loading-text="Carregando..." 
                 hide-default-footer disable-sort>
+                <template v-slot:item.species-id="{ item }">
+                    <div v-if="speciesLoaded">
+                        {{ getSpecies(item.speciesId).name }}
+                    </div>
+                    <div v-else>
+                        Carregando...
+                    </div>
+                </template>
             </v-data-table>
         </div>
     </div>
 </div>
+
+<v-dialog v-model="isAdding" content-class="max-w-sm" @@click.stop="isAdding = false">
+    <v-card :loading="isProcessing" class="overflow-hidden">
+        <v-card-title>Nova raça</v-card-title>
+        <v-divider></v-divider>
+        <v-row class="m-0">
+            <v-col cols="12">
+                <div class="mb-1 text-lg">Nome</div>
+                <v-text-field v-model="addModel.Name" dense solo hide-details="auto"></v-text-field>
+            </v-col>
+            <v-col cols="12">
+                <div class="mb-1 text-lg">Espécie</div>
+                <v-select v-model="addModel.SpeciesId" :items="species" item-text="name" item-value="id" dense solo hide-details="auto"></v-select>
+            </v-col>
+        </v-row>
+        <v-divider></v-divider>
+        <v-row class="m-0">
+            <v-col cols="6">
+                <v-btn elevation="0" block outlined color="primary" :disabled="isProcessing" @@click="isAdding = false">Cancelar</v-btn>
+            </v-col>
+            <v-col cols="6">
+                <v-btn elevation="0" block color="primary" :loading="isProcessing" @@click="add">Salvar</v-btn>
+            </v-col>
+        </v-row>
+    </v-card>
+</v-dialog>
 
 @section Script
 {

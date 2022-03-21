@@ -42,7 +42,7 @@ namespace Sanctuary.Presentation.Controllers
         public JsonResult Add([FromBody] SpeciesViewModel model)
         {
             if (!ModelState.IsValid) 
-                return Error(HttpStatusCode.BadRequest, "Campos preenchidos incorretamente: " + model.Name);
+                return Error(HttpStatusCode.BadRequest, "Campos preenchidos incorretamente");
 
             _context.Species.Add(new Species
             {

@@ -3,16 +3,16 @@
     vuetify: vuetifyConfig,
     data: {
         org: org,
-        entities: [],
-        entitiesHeaders: [
-            { text: 'Nome', value: 'name' },
-        ],
-        entitiesLoaded: false,
+        isAdding: false,
+        isProcessing: false,
         addModel: {
             Name: null
         },
-        isAdding: false,
-        isProcessing: false
+        entities: [],
+        entitiesLoaded: false,
+        entitiesHeaders: [
+            { text: "Espécie", value: "name" },
+        ],
     },
     mounted() {
         org.mounted(this)

@@ -1,4 +1,6 @@
-﻿var vuetifyConfig = new Vuetify({
+﻿const EventBus = new Vue()
+
+var vuetifyConfig = new Vuetify({
     theme: {
         themes: {
             light: {
