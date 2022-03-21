@@ -27,6 +27,7 @@ namespace Sanctuary.Presentation.Controllers
             {
                 data.Add(new VolunteersViewModel
                 {
+                    Id = item.Id,
                     Name = item.Name,
                     Email = item.Email,
                     Phone = item.Phone,

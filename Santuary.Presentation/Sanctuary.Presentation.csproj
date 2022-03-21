@@ -15,12 +15,14 @@
     <Content Remove="wwwroot\Animals\Animals.js" />
     <Content Remove="wwwroot\Authentication\Denied.js" />
     <Content Remove="wwwroot\Home\Authenticated.js" />
+    <Content Remove="wwwroot\Races\Races.js" />
     <Content Remove="wwwroot\Species\Species.js" />
     <Content Remove="wwwroot\Template\Template.js" />
     <Content Remove="wwwroot\Volunteers\Volunteers.js" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Races\Races.js" />
     <None Include="wwwroot\Species\Species.js" />
     <None Include="wwwroot\Volunteers\Volunteers.js" />
     <None Include="wwwroot\Template\Template.js" />

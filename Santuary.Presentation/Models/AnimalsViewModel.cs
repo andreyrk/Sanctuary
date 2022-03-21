@@ -5,9 +5,11 @@ namespace Sanctuary.Presentation.Models
 {
     public class AnimalsViewModel
     {
-        public string Name { get; set; }
+        public int Id { get; set; }
         
-        public int SpeciesId { get; set; }
+        public int RaceId { get; set; }
+
+        public string Name { get; set; }
 
         public bool Sex { get; set; }
 

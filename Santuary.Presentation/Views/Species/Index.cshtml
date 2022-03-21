@@ -4,10 +4,10 @@
 
 <div class="flex flex-col py-8 px-4 sm:px-2">
     <div class="w-full max-w-screen-md mx-auto mb-8">
-        <div class="flex mb-2">
-            <span class="text-xl font-bold">Espécies</span>
+        <div class="flex mb-2 h-10">
+            <span class="leading-loose text-xl font-bold">Espécies</span>
             <v-spacer></v-spacer>
-            <v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
+            <v-btn icon @@click="isAdding = true"><v-icon>mdi-plus</v-icon></v-btn>
         </div>
         <div class="flex flex-col">
             <v-data-table 
@@ -19,6 +19,28 @@
         </div>
     </div>
 </div>
+
+<v-dialog v-model="isAdding" content-class="max-w-sm" @@click.stop="isAdding = false">
+    <v-card :loading="isProcessing" class="overflow-hidden">
+        <v-card-title>Nova espécie</v-card-title>
+        <v-divider></v-divider>
+        <v-row class="m-0 p-4">
+            <v-col class="p-0">
+                <div class="mb-1 text-lg">Nome</div>
+                <v-text-field v-model="addModel.Name" dense solo hide-details="auto"></v-text-field>
+            </v-col>
+        </v-row>
+        <v-divider></v-divider>
+        <v-row class="m-0 p-4">
+            <v-col cols="6" class="p-0 pr-2">
+                <v-btn elevation="0" block outlined color="primary" :disabled="isProcessing" @@click="isAdding = false">Cancelar</v-btn>
+            </v-col>
+            <v-col cols="6" class="p-0 pl-2">
+                <v-btn elevation="0" block color="primary" :loading="isProcessing" @@click="add">Salvar</v-btn>
+            </v-col>
+        </v-row>
+    </v-card>
+</v-dialog>
 
 @section Script
 {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sanctuary.Domain;
 using Sanctuary.Presentation.Models;
+using Sanctuary.Domain.Entities;
 
 namespace Sanctuary.Presentation.Controllers
 {
@@ -18,7 +19,6 @@ namespace Sanctuary.Presentation.Controllers
             return View();
         }
 
-
         [Authorize(Roles = "Admin")]
         [HttpPost]
         public JsonResult Data()
@@ -28,12 +28,29 @@ namespace Sanctuary.Presentation.Controllers
             {
                 data.Add(new SpeciesViewModel
                 {
+                    Id = item.Id,
                     Name = item.Name,
                 });
             }
 
             Response.StatusCode = (int)HttpStatusCode.OK;
             return Json(data);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public JsonResult Add([FromBody] SpeciesViewModel model)
+        {
+            if (!ModelState.IsValid) 
+                return Error(HttpStatusCode.BadRequest, "Campos preenchidos incorretamente: " + model.Name);
+
+            _context.Species.Add(new Species
+            {
+                Name = model.Name
+            });
+            _context.SaveChanges();
+
+            return Success(null);
         }
     }
 }

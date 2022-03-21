@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sanctuary.Presentation.Models
 {
-    [Serializable]
-    public class SpeciesViewModel
+    public class RacesViewModel
     {
         public int Id { get; set; }
 
-        [Required]
+        public int SpeciesId { get; set; }
+
         public string Name { get; set; }
     }
 }

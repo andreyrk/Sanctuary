@@ -8,9 +8,9 @@ using Sanctuary.Presentation.Models;
 
 namespace Sanctuary.Presentation.Controllers
 {
-    public class AnimalsController : BaseController
+    public class RacesController : BaseController
     {
-        public AnimalsController(BaseContext context) : base(context) { }
+        public RacesController(BaseContext context) : base(context) { }
 
         [Authorize(Roles = "Admin")]
         public IActionResult Index()
@@ -22,16 +22,14 @@ namespace Sanctuary.Presentation.Controllers
         [HttpPost]
         public JsonResult Data()
         {
-            var data = new List<AnimalsViewModel>();
-            foreach (var item in _context.Animals.ToList())
+            var data = new List<RacesViewModel>();
+            foreach (var item in _context.Races.ToList())
             {
-                data.Add(new AnimalsViewModel
+                data.Add(new RacesViewModel
                 {
                     Id = item.Id,
-                    RaceId = item.RaceId,
+                    SpeciesId = item.SpeciesId,
                     Name = item.Name,
-                    Sex = item.Sex,
-                    Birthdate = item.Birthdate,
                 });
             }
 
