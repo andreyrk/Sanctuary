@@ -74,6 +74,9 @@
                 this.alert.message = message
                 this.alert.active = true
             },
+            unavailable() {
+                this.showAlert("Em construção", "Essa funcionalidade está em construção")
+            },
             mounted(vue) {
                 vue.$nextTick(() => {
                     $("#app").removeClass("hidden")
