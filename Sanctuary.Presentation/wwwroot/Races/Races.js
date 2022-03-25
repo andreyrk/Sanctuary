@@ -14,6 +14,7 @@
         entitiesHeaders: [
             { text: "Espécie", width: "200px", value: "species-id" },
             { text: "Raça", value: "name" },
+            { text: 'Ações', value: 'actions' },
         ],
         species: [],
         speciesLoaded: false,

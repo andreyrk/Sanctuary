@@ -18,5 +18,8 @@ namespace Sanctuary.Domain.Entities
 
         public DateTime Birthdate { get; set; }
 
+        public bool HasBirthdate { get; set; }
+
+        public bool HasAccurateBirthdate { get; set; }
     }
 }

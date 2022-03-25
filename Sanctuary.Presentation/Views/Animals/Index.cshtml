@@ -7,7 +7,7 @@
         <div class="flex mb-2 h-10">
             <span class="leading-loose text-xl font-bold">Animais</span>
             <v-spacer></v-spacer>
-            <v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
+            <v-btn icon @@click="isAdding = true"><v-icon>mdi-plus</v-icon></v-btn>
         </div>
         <div class="flex flex-col">
             <v-data-table 
@@ -15,13 +15,98 @@
                 :items-per-page="25" class="elevation-1" 
                 :loading="!entitiesLoaded" loading-text="Carregando..." 
                 hide-default-footer disable-sort>
+                <template v-slot:item.species="{ item }">
+                    {{ getSpeciesByRace(item.raceId).name }}
+                </template>
+                <template v-slot:item.race="{ item }">
+                    {{ getRaceById(item.raceId).name }}
+                </template>
+                <template v-slot:item.sex="{ item }">
+                    <div v-if="item.sex">
+                        Fêmea
+                    </div>
+                    <div v-else>
+                        Macho
+                    </div>
+                </template>
                 <template v-slot:item.birthdate="{ item }">
-                    {{ new Date(item.birthdate).toLocaleDateString() }}
+                    <div v-if="item.hasBirthdate">
+                        {{ new Date(item.birthdate).toLocaleDateString() }}
+                    </div>
+                    <div v-else>
+                        Não informado
+                    </div>
+                </template>
+                <template v-slot:item.actions="{ item }">
+                    <v-btn icon @@click="org.unavailable()"><v-icon>mdi-pencil</v-icon></v-btn>
                 </template>
             </v-data-table>
         </div>
     </div>
 </div>
+
+<v-dialog v-model="isAdding" content-class="max-w-sm" @@click.stop="isAdding = false">
+    <v-card :loading="isProcessing" class="overflow-hidden">
+        <v-card-title>Cadastrar animal</v-card-title>
+        <v-divider></v-divider>
+        <v-row class="m-0">
+            <v-col cols="12">
+                <div class="mb-1 text-lg">Nome</div>
+                <v-text-field v-model="addModel.Name" dense solo hide-details="auto"></v-text-field>
+            </v-col>
+            <v-col cols="12">
+                <div class="mb-1 text-lg">Sexo</div>
+                <v-radio-group v-model="addModel.Sex">
+                    <v-radio label="Macho" :value="false"></v-radio>
+                    <v-radio label="Fêmea" :value="true"></v-radio>
+                </v-radio-group>
+            </v-col>
+            <v-col cols="12">
+                <div class="mb-1 text-lg">Espécie</div>
+                <v-select :items="species" item-text="name" item-value="id" dense solo hide-details="auto" v-on:change="onChangeSpecies"></v-select>
+            </v-col>
+            <v-col cols="12">
+                <div class="mb-1 text-lg">Raça</div>
+                <v-select v-model="addModel.RaceId" :items="speciesRaces" item-text="name" item-value="id" dense solo hide-details="auto"></v-select>
+            </v-col>
+            <v-col cols="12">
+                <div class="mb-1 text-lg">Tipo de idade</div>
+                <v-radio-group v-model="birthdateType">
+                    <v-radio label="Data exata" :value="1"></v-radio>
+                    <v-radio label="Data aproximada" :value="2"></v-radio>
+                    <v-radio label="Não preencher agora" :value="3"></v-radio>
+                </v-radio-group>
+            </v-col>
+            <v-col cols="12">
+                <div v-if="birthdateType == 1">
+                    <div class="mb-1 text-lg">Nascimento</div>
+                    <v-text-field v-model="addModel.Birthdate" dense solo hide-details="auto"></v-text-field>
+                </div>
+                <div v-else-if="birthdateType == 2">
+                    <div class="mb-1 text-lg">Tipo de aproximação</div>
+                    <v-radio-group v-model="birthdateApproximationType">
+                        <v-radio label="Dias" :value="'days'"></v-radio>
+                        <v-radio label="Semanas" :value="'weeks'"></v-radio>
+                        <v-radio label="Meses" :value="'months'"></v-radio>
+                        <v-radio label="Ano" :value="'years'"></v-radio>
+                    </v-radio-group>
+                    <div class="mb-1 text-lg">Quantidade</div>
+                    <v-text-field v-model="birthdateApproximation" type="number" dense solo hide-details="auto"></v-text-field>
+                </div>
+                <div v-else-if="birthdateType == 3"></div>
+            </v-col>
+        </v-row>
+        <v-divider></v-divider>
+        <v-row class="m-0">
+            <v-col cols="6">
+                <v-btn elevation="0" block outlined color="primary" :disabled="isProcessing" @@click="isAdding = false">Cancelar</v-btn>
+            </v-col>
+            <v-col cols="6">
+                <v-btn elevation="0" block color="primary" :loading="isProcessing" @@click="add">Salvar</v-btn>
+            </v-col>
+        </v-row>
+    </v-card>
+</v-dialog>
 
 @section Script
 {

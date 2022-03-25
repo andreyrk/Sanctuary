@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sanctuary.Domain;
 using Sanctuary.Presentation.Models;
+using Sanctuary.Domain.Entities;
 
 namespace Sanctuary.Presentation.Controllers
 {
@@ -32,11 +33,34 @@ namespace Sanctuary.Presentation.Controllers
                     Name = item.Name,
                     Sex = item.Sex,
                     Birthdate = item.Birthdate,
+                    HasBirthdate = item.HasBirthdate,
+                    HasAccurateBirthdate = item.HasAccurateBirthdate,
                 });
             }
 
             Response.StatusCode = (int)HttpStatusCode.OK;
             return Json(data);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public JsonResult Add([FromBody] AnimalsViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return Error(HttpStatusCode.BadRequest, "Campos preenchidos incorretamente");
+
+            _context.Animals.Add(new Animal
+            {
+                Name = model.Name,
+                RaceId = model.RaceId,
+                Sex = model.Sex,
+                Birthdate = model.Birthdate,
+                HasBirthdate = model.HasBirthdate,
+                HasAccurateBirthdate = model.HasAccurateBirthdate,
+            });
+            _context.SaveChanges();
+
+            return Success(null);
         }
     }
 }

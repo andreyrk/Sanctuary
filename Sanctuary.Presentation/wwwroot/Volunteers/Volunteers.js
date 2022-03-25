@@ -9,6 +9,7 @@
             { text: 'Telefone', value: 'phone' },
             { text: 'Email', value: 'email' },
             { text: 'Nascimento', value: 'birthdate' },
+            { text: 'Ações', value: 'actions' },
         ],
         entitiesLoaded: false
     },
